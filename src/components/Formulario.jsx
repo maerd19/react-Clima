@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const Formulario = (setUbicacion) => {
-  // State del formulario
-  const [busqueda, setBusqueda] = useState({
-    ciudad: "",
-    pais: "",
-  });
+const Formulario = ({ busqueda, setBusqueda, setConsultar }) => {
   const [error, setError] = useState(false);
 
   // Estraer ciudad y pais
@@ -14,6 +9,9 @@ const Formulario = (setUbicacion) => {
 
   // Funcion que coloca los elementos en el state
   const handleChange = (e) => {
+    // Eliminar mensaje de error
+    setError(false);
+
     // Actualizar el State
     setBusqueda({ ...busqueda, [e.target.name]: e.target.value });
   };
@@ -28,10 +26,8 @@ const Formulario = (setUbicacion) => {
       return;
     }
 
-    setError(false);
-
     // Pasarlo al componente principal
-    setUbicacion(busqueda);
+    setConsultar(true);
   };
 
   return (
@@ -76,7 +72,9 @@ const Formulario = (setUbicacion) => {
 };
 
 Formulario.propTypes = {
-  setUbicacion: PropTypes.func.isRequired,
+  busqueda: PropTypes.object.isRequired,
+  setBusqueda: PropTypes.func.isRequired,
+  setConsultar: PropTypes.func.isRequired,
 };
 
 export default Formulario;
