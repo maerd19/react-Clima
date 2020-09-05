@@ -1,23 +1,44 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-const Formulario = () => {
+const Formulario = (setUbicacion) => {
   // State del formulario
   const [busqueda, setBusqueda] = useState({
     ciudad: "",
     pais: "",
   });
+  const [error, setError] = useState(false);
 
   // Estraer ciudad y pais
   const { ciudad, pais } = busqueda;
 
-  // Function que coloca los elementos en el state
+  // Funcion que coloca los elementos en el state
   const handleChange = (e) => {
     // Actualizar el State
     setBusqueda({ ...busqueda, [e.target.name]: e.target.value });
   };
 
+  // Cuando el usuario da submit al form
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validar
+    if (ciudad.trim() === "" || pais.trim() === "") {
+      setError(true);
+      return;
+    }
+
+    setError(false);
+
+    // Pasarlo al componente principal
+    setUbicacion(busqueda);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      {error ? (
+        <p className="red darken-4 error">Todos los campos son obligatorios.</p>
+      ) : null}
       <div className="input-field col s12">
         <input
           type="text"
@@ -42,8 +63,20 @@ const Formulario = () => {
         </select>
         <label htmlFor="pais">Pais: </label>
       </div>
+
+      <div className="input-field col s12">
+        <input
+          type="submit"
+          value="Buscar Clima"
+          className="waves-effect waves-light btn-large btn-block yellow accent-4"
+        />
+      </div>
     </form>
   );
+};
+
+Formulario.propTypes = {
+  setUbicacion: PropTypes.func.isRequired,
 };
 
 export default Formulario;
