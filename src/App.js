@@ -21,7 +21,7 @@ function App() {
   const consultarAPI = async () => {
     if (consultar) {
       const appId = "72100030264e88b7ae62d9e6ce1a8570";
-      const url = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`;
 
       const respuesta = await fetch(url);
       const resultado = await respuesta.json();
@@ -38,6 +38,7 @@ function App() {
   useEffect(() => {
     consultarAPI();
     // Cuando consultar cambie de valor se hara la busqueda hacia la API
+    // eslint-disable-next-line
   }, [consultar]);
 
   return (
